@@ -23,10 +23,10 @@ export const sequelize = new Sequelize({
   database: dbConfig.database,
   models: [User, Product, FormType, Form, UserAction, PointTransaction, Redemption, Company, Project],
   dialect: dbConfig.dialect,
-  // dialectOptions: {
-  //   ssl: {
-  //     require: true,
-  //     rejectUnauthorized: false, // Disable strict SSL for testing (use with caution in production)
-  //   },
-  // }
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false, // Disable strict SSL for testing (use with caution in production)
+    },
+  }
 });
