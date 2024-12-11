@@ -31,11 +31,11 @@ export const userLogin = async (req: Request, res: Response) => {
 
     // Generate JWT token
     const token = jwt.sign({ userId: user.user_id, email: user.email, companyId: user.company_id }, process.env.JWT_SECRET as string, {
-      expiresIn: '1d',  // Adjust expiration as needed
+      expiresIn: process.env.JWT_EXPIRY,  // Adjust expiration as needed
     });
 
     const refreshToken = jwt.sign({ userId: user.user_id, email: user.email, companyId: user.company_id }, process.env.REFRESH_JWT_SECRET as string, {
-      expiresIn: '7d',  // Adjust expiration as needed
+      expiresIn: process.env.REFRESH_JWT_EXPIRY,  // Adjust expiration as needed
     });
 
     const userDetail = {
@@ -50,7 +50,15 @@ export const userLogin = async (req: Request, res: Response) => {
       user_type: user.user_type
     }
 
-    res.status(200).json({ message: 'Login successful', token, refreshToken, user: userDetail });
+    res
+      .status(200)
+      .cookie('refreshToken', refreshToken, {
+        httpOnly: true,
+        sameSite: 'none',
+        secure: true,
+      })
+      .header('Authorization', token)
+      .json({ message: 'Login successful', user: userDetail })
   } catch (error) {
     res.status(500).json({ message: 'Something went wrong', error });
   }

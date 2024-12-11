@@ -3,6 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 import path from 'path';
 
 import { sequelize } from './db';
@@ -19,10 +20,13 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use(cookieParser(process.env.COOKIE_SECRET));
+
 // Allowed origins array
 const allowedOrigins = [
   'http://localhost:3000',
   'https://go-program-thai.web.app',
+  'https://gopro-lenovoth.com',
 ];
 
 // CORS options
@@ -36,6 +40,7 @@ const corsOptions = {
   },
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Add allowed methods as needed
   credentials: true, // If you need cookies to be included in CORS requests
+  exposedHeaders: ['Authorization'],
 };
 
 // Apply CORS middleware

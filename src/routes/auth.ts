@@ -2,8 +2,9 @@ import express from 'express';
 
 const router = express.Router();
 
-import { generateNewToken } from '../controllers/auth';
+import { generateNewToken, logout } from '../controllers/auth';
 
-router.post('/refresh-token', generateNewToken);
+router.post('/refresh', generateNewToken);
+router.post('/logout', logout);
 
 export default router;
