@@ -52,11 +52,11 @@ export const userLogin = async (req: Request, res: Response) => {
 
     res
       .status(200)
-      // .cookie('refreshToken', refreshToken, {
-      //   httpOnly: true,
-      //   sameSite: 'none',
-      //   secure: true,
-      // })
+      .cookie('refreshToken', refreshToken, {
+        httpOnly: true,
+        sameSite: 'none',
+        secure: true,
+      })
       .header('Authorization', token)
       .json({ message: 'Login successful', user: userDetail })
   } catch (error) {
