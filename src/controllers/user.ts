@@ -318,7 +318,7 @@ export const userSignupConfirmation = async (req: Request, res: Response) => {
   const currentDate = dayjs();
 
   // Define the target comparison date
-  const targetDate = dayjs('2024-12-15');
+  const targetDate = dayjs('2024-12-21');
 
   if (currentDate.isBefore(targetDate, 'day')) {
     bonusSignupPoint = 400;

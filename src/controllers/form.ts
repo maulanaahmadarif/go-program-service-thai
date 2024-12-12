@@ -94,10 +94,10 @@ export const approveForm = async (req: Request, res: Response) => {
 
         const currentDate = dayjs();
         // Define the target comparison date
-        const targetDate = dayjs('2024-12-18');
+        const targetDate = dayjs('2024-12-29');
 
         if (currentDate.isBefore(targetDate, 'day')) {
-          if ((completedFormTypeIds.includes(1) && completedFormTypeIds.includes(2) && formType?.form_type_id === 3)) {
+          if (formType?.form_type_id === 3) {
             additionalPoint += 200
           }
         }
