@@ -212,6 +212,14 @@ export const getUserProfile = async (req: any, res: Response) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
+    const total_company_points = await User.sum('accomplishment_total_points', {
+      where: {
+        company_id: user.company_id,
+        level: 'CUSTOMER',
+        is_active: true
+      }
+    });
+
     // Build the user profile response
     const userProfile = {
       id: user.user_id,
@@ -222,7 +230,7 @@ export const getUserProfile = async (req: any, res: Response) => {
       phone_number: user.phone_number ?? null,
       job_title: user.job_title ?? null,
       user_point: user.total_points,
-      company_point: user.company?.total_points,
+      company_point: total_company_points,
       accomplishment_total_points: user.accomplishment_total_points,
       fullname: user.fullname,
     };
